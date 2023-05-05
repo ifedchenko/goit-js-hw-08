@@ -10,8 +10,8 @@ player.on('timeupdate', throttle(onGetCurrentTime, 1000));
 function onGetCurrentTime() {
   player
     .getCurrentTime()
-    .then(function (second) {
-      localStorage.setItem('videoplayer-current-time', second);
+    .then(function (seconds) {
+      localStorage.setItem('videoplayer-current-time', seconds);
     })
     .catch(function (error) {
       console.log(error);
