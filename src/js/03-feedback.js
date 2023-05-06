@@ -9,7 +9,7 @@ form.addEventListener('input', throttle(onInput, 500));
 
 const STORAGE_KEY = 'feedback-form-state';
 
-const formData = {
+let formData = {
   email: '',
   message: '',
 };
@@ -23,16 +23,21 @@ function onInput(evt) {
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-  console.log(formData);
-  evt.currentTarget.reset();
-  localStorage.removeItem(STORAGE_KEY);
+  if (textArea.value.trim() === '' || inputEmail.value.trim() === '') {
+    alert('Please fill all the field!');
+  } else {
+    console.log(formData);
+    evt.currentTarget.reset();
+    localStorage.removeItem(STORAGE_KEY);
+  }
 }
 
 function onReloadPage() {
   const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-  if (savedData) {
-    inputEmail.value = savedData.email !== undefined ? savedData.email : '';
-    textArea.value = savedData.message !== undefined ? savedData.message : '';
+  if (savedData !== null) {
+    inputEmail.value = savedData.email;
+    textArea.value = savedData.message;
+    formData = savedData;
   }
 }
